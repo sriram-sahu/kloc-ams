@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
+import gapi from 'gapi-script'
 import TextField from "@mui/material/TextField";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import "./index.css";
@@ -58,7 +59,7 @@ const EachCandidateInputField = ({ onInputChange }) => {
           placeholder="Date"
           type="date"
           variant="outlined"
-          className="input-field m-1 custome-input-field"
+          className="input-field m-1 custom-input-field"
           value={inputValues.endDate}
           onChange={(e) => handleInputChange("endDate", e.target.value)}
           required

@@ -1,3 +1,7 @@
+// this component about score card design,downloading score card,sending scores to candidate through emails including cc 
+
+
+
 import React, { useRef, useState } from 'react'
 import jsPDF from 'jspdf'; 
 import emailjs from '@emailjs/browser';
@@ -8,6 +12,7 @@ import { useReactToPrint } from "react-to-print";
 import { useLocation } from 'react-router-dom';
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts"
 import './index.css'
+
 function Chart() {
   const detailsPdf = useRef();
     const location=useLocation()
@@ -16,7 +21,13 @@ function Chart() {
     const [isOpen,setIsOpen]=useState(false)
     console.log(data)
     const COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
+    // this loop about candidate's scores with respective of stream and making piechat data for designing piechart  
     let pieData
+    //  this condition is  validating aptitude score and technical score,
+    //  if it is aptitude score and technical score taking
+    //   this data and designing piechat which is candidate 
+    //   who wrote the test which has apitude and technical are sections of that respective test
+
     if (data.aptitude_score!==undefined && data.reasoning_score===undefined){
        pieData=[
         {
@@ -28,6 +39,10 @@ function Chart() {
             value:data.technical_score
         }
       ]
+      //  this condition is  validating aptitude score and reasoing score,
+    //  if it is aptitude score and reasoning score taking
+    //   this data and designing piechat which is candidate 
+    //   who wrote the test which has apitude and reasoning are sections of that respective test
     }else if (data.aptitude_score!==undefined && data.reasoning_score!==undefined){
       pieData=[
         {
@@ -39,6 +54,10 @@ function Chart() {
             value:data.reasoning_score
         }
       ]
+      //  this condition is  validating java score and React score,
+    //  if it is java score and React score taking
+    //   this data and designing piechat which is candidate 
+    //   who wrote the test which has Java and React are sections of that respective test
     }else{
       pieData=[
         {
@@ -52,11 +71,14 @@ function Chart() {
     ]
     }
 
+    // this function regarding to generate  the pdf which includes student details along with scores piechat when clicking on the download button in the component
     const generatePdf = useReactToPrint({
       content: () => detailsPdf.current,
       documentTitle: data.Email_Address.slice(0,data.Email_Address.indexOf("@")),
       onAfterPrint: () => alert("pdf downloaded"),
     });
+    // this handle Submit function regarding to sending email to candidates.  this function  includes whatever the detail sending  candidate through email,
+    // store those details in the variable name message
     const handleSubmit = (item) => {
       var document = new jsPDF("landscape", "px", "a4", false);
       document.rect(60, 60, 600, 400, "D");
@@ -88,14 +110,15 @@ function Chart() {
       data.new_Mail=item
   
       const pdfContent = document.output("datauristring");
-  
+      // this message variable includes data which sending to candidate through mail
       let message = `Hello ${data.Email_Address} \n \n Here Your result Details \n \n ${pdfContent}`;
         data.section1_score=data.aptitude_score !==undefined ? data.aptitude_score : data.fullstack_java_score
         data.section2_score=data.technical_score !==undefined ? data.technical_score : (data.reasoning_score!==undefined ? data.reasoning_score : data.fullstack_react_score)
 
         data.type1=data.aptitude_score !==undefined ? 'Aptitude Score' : 'Java Score'
         data.type2=data.technical_score !==undefined ? "Technical Score" : (data.reasoning_score!==undefined ? 'Reasoning Score' : "React Score") 
-      emailjs
+      
+        emailjs
         .send(
           "service_52vbgo4",
           "template_ibuby0d",
@@ -114,6 +137,7 @@ function Chart() {
           console.error("Error sending email:", error);
         });
     };
+    // this function regarding to populating popup while sending emails adding  and adding  cc of email
     const sendMail=(data)=>{
       setIsOpen(!isOpen)
         
@@ -123,7 +147,7 @@ function Chart() {
     }
     
   return (
-    <div className="chart-container" >
+    <div  className="chart-container" >
       <div ref={detailsPdf} className="charts">
         <div className='details'>
         <h1 style={{fontSize:'25px',fontWeight:'bold'}}>Student Details:</h1>
@@ -167,6 +191,7 @@ function Chart() {
         show={isOpen} 
         onRequestClose={handleClose}
       >
+
       <Modal.Header closeButton  onClick={handleClose}>
         <Modal.Title>Email Details</Modal.Title>
       </Modal.Header>

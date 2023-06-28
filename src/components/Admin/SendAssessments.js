@@ -1,9 +1,11 @@
 // import all required packages like react, unique-random, @emailjs-browser, js-cookie, react-router-dom, @mui-material, reactjs-popup, react-icons and components like EachCandidateInputField, index.css components to render the SendAssessments component
+// import all required packages like react, unique-random, @emailjs-browser, js-cookie, react-router-dom, @mui-material, reactjs-popup, react-icons and components like EachCandidateInputField, index.css components to render the SendAssessments component
 import React, { useState, useEffect } from "react";
 import EachCandidateInputField from "./EachCandidateInputField";
 import uniqueRandom from "unique-random";
 import emailjs from "@emailjs/browser";
 import "./index.css";
+// import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -215,13 +217,13 @@ const Assessment = () => {
               </div>
             ))}
           </div>
-          <Button
+          <button
             variant="contained"
             className="assessment-button m-3"
             onClick={onClickProceed}
           >
             Proceed
-          </Button>
+          </button>
         </div>
         <div className="each-input-student-details-container">
           {proceeding &&

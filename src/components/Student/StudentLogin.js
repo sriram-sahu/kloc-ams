@@ -79,12 +79,8 @@ export default function StudentLogin() {
                 console.log(filteredData, "test");
                 const apiKey = "AIzaSyAz1z7QqYvovxmnO-lvzoORcMC1UZzXNRE"; // this key was used in apps script for authentication (don't change this key)
 
-                // it will get the correct path based on email and password entered
-                const path = testDetails.find(
-                  (test) => test.testName === testName
-                )?.path;
-                // navigate to to test path
-                navigate(path);
+                // it will direct to test path with stateValue of testName
+                navigate(`/test/${testName}`, { state: testName });
 
                 // it will update the sheet as test completed
                 fetch(
@@ -193,7 +189,7 @@ export default function StudentLogin() {
                   Start Test
                 </Button>
                 {/* displays the error msg */}
-                <p className='text-danger'> {message}</p>
+                <p className='text-danger'>* {message}</p>
               </Box>
             </Box>
           </Grid>

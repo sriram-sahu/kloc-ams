@@ -1,16 +1,17 @@
+// import all required packages like react, react-icons, reactjs-popup, js-cookie, react-router-dom and css file StudentReports.css for styling
 import React, { useState, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./StudentReports.css";
+
 function StudentReports() {
   const location = useLocation();
   const [search, setSearch] = useState("");
   const [data, setData] = useState(location.state);
-  let data1 = data.allData.flat();
+  let data1 = data?.allData?.flat() || [];
   const [filterData, setFilterData] = useState(data1);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -150,7 +151,6 @@ function StudentReports() {
               value={startDate}
               className='date-input'
               onChange={(e) => setStartDate(e.target.value)}
-              style={{ marginLeft: "10px" }}
             />
           </div>
           <div className='display-between'>
@@ -160,7 +160,6 @@ function StudentReports() {
               value={endDate}
               className='date-input'
               onChange={(e) => setEndDate(e.target.value)}
-              style={{ marginLeft: "10px" }}
             />
           </div>
           <button
