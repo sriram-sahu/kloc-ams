@@ -92,7 +92,7 @@ export default function StudentLogin() {
   return (
     <div>
       <ThemeProvider theme={defaultTheme}>
-        <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid container component='main' sx={{ height: "100vh" }}>
           <CssBaseline />
           <Grid
             item
@@ -133,48 +133,48 @@ export default function StudentLogin() {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography component='h1' variant='h5'>
                 Sign in
               </Typography>
               <Box
-                component="form"
+                component='form'
                 noValidate
                 onSubmit={handleSubmit}
                 sx={{ mt: 1 }}
               >
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                  autoComplete='email'
                   onChange={(event) => setEmail(event.target.value)}
                   autoFocus
                 />
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  name="password"
-                  label="Test Pin"
-                  type="text"
-                  id="password"
+                  name='password'
+                  label='Test Pin'
+                  type='text'
+                  id='password'
                   onChange={(event) => setTestKey(event.target.value)}
-                  autoComplete="current-password"
+                  autoComplete='current-password'
                 />
 
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
+                  variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Start Test
                 </Button>
                 {/* displays the error msg */}
-                <p className="text-danger">* {message}</p>
+                <p className='text-danger'> {message}</p>
               </Box>
             </Box>
           </Grid>
