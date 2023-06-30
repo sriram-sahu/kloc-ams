@@ -15,10 +15,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Alert } from "@mui/material";
-import {useLocation} from 'react-router-dom'
-import {GiHamburgerMenu} from "react-icons/gi"
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import { useLocation } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const Assessment = () => {
   const [activeTest, setActiveTest] = useState("");
@@ -27,8 +27,8 @@ const Assessment = () => {
   const [proceedingStatus, setProceedingStatus] = useState(false);
   const [candidateFields, setCandidateFields] = useState([]);
   const [open, setOpen] = useState(false);
-  const location=useLocation()
-  const [finalData,setFinalData]=useState(location.state)
+  const location = useLocation();
+  const [finalData, setFinalData] = useState(location.state);
   const tests = [
     "Freshers Junior Test",
     "Fresher Test",
@@ -44,31 +44,43 @@ const Assessment = () => {
   const isEmptyField = candidateFields.some((each) =>
     Object.values(each).some((value) => value === "")
   );
+  //this method is for opening for dialog Box onClicking sending Assessment button
   const handleClickOpen = () => {
+    //if input fields are not empty dialogBox will open for confirmation
     if (!isEmptyField) {
       setOpen(true);
     }
+    // if any of input fields are empty
     if (isEmptyField) {
       alert("Please fill in all the candidate details");
       return;
     }
   };
+  // this handleClose method is for closing of dialog box
   const handleClose = () => {
     setOpen(false);
   };
   const navigate = useNavigate();
+
   useEffect(() => {
+    //cookies token is for validation of admin
     const token = Cookies.get("token");
     if (!token) {
       navigate("/notFound");
     }
+
     setStudentCount(1);
     setProceeding(false);
   }, [activeTest]);
+
   const handleInputChange = (index, values) => {
+    //prevCandidateFields are the values from  candidateField state
+
     setCandidateFields((prevCandidateFields) => {
       const updatedFields = [...prevCandidateFields];
+      // based on index of EachCandidateInputField value updatedFields will be updated
       updatedFields[index] = { ...updatedFields[index], ...values };
+      //updatedFields will be set in to candidateField though setCandidateFields stateMethod
       return updatedFields;
     });
   };
@@ -77,12 +89,14 @@ const Assessment = () => {
       alert("Select Test");
     } else {
       setProceeding(true);
-      setProceedingStatus(true)
+      setProceedingStatus(true);
+      // creates empty objects based on the length which is studentCount
       setCandidateFields(Array.from({ length: studentCount }, () => ({})));
     }
   };
   const sendingMailThroughEmailJs = (student) => {
     console.log(student);
+    //EmailJS is the service provider to send emails through js(visit:https://www.emailjs.com)
     emailjs
       .send(
         "service_okvqzif",
@@ -104,6 +118,8 @@ const Assessment = () => {
       });
   };
   const updateStudentThroughSheetDb = (student) => {
+    // sheetDb provides the service for updating the google sheet (restricted mode) https://sheetdb.io/
+
     console.log(activeTest);
     const random = uniqueRandom(10000, 100000);
     const sentDate = new Date(); // Current date and time
@@ -118,6 +134,7 @@ const Assessment = () => {
       uniqueId: "kloc" + random(),
       isCompleted: "incomplete",
     };
+    sendingMailThroughEmailJs(details);
     console.log(details, "gh");
     fetch("https://sheetdb.io/api/v1/qeetqgie30fhh", {
       method: "POST",
@@ -143,126 +160,204 @@ const Assessment = () => {
     }, millisecondsDiff);
   };
   const onClickSendAssessment = () => {
-    console.log("triggered");
-    // Check if any of the candidate input fields are empty
+    //console.log("triggered");
+
     candidateFields.forEach((each) => {
       updateStudentThroughSheetDb(each);
-      sendingMailThroughEmailJs(each);
     });
     handleClose();
     setProceeding(false);
-    setProceedingStatus(false)
+    setProceedingStatus(false);
   };
+
   return (
-    <div className="send-assessment-main-container">
+    <div className='send-assessment-main-container'>
       {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
-      <div className="admin-header-container">
-        <div className="admin-header-logo-container">
+      <div className='admin-header-container'>
+        <div className='admin-header-logo-container'>
           {/* logo */}
-          <img src="https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png" alt="logo" style={{height:'50px', width:'100px', borderRadius:'10px'}} onClick={()=>navigate('/')}/>
+          <img
+            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+            alt='logo'
+            style={{ height: "50px", width: "100px", borderRadius: "10px" }}
+            onClick={() => navigate("/")}
+          />
         </div>
-        <div className="admin-desktop-header-navbar-container">
+        <div className='admin-desktop-header-navbar-container'>
           {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-          <p onClick={()=>navigate('/dashboard',{state:finalData})} className="admin-desktop-header-navbar-link">Dashboard</p>
+          <p
+            onClick={() => navigate("/dashboard", { state: finalData })}
+            className='admin-desktop-header-navbar-link'
+          >
+            Dashboard
+          </p>
           {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-          <p onClick={()=>navigate('/sendAssessments',{state:finalData})} className="admin-desktop-header-navbar-link">Assessments</p>
+          <p
+            onClick={() => navigate("/sendAssessments", { state: finalData })}
+            className='admin-desktop-header-navbar-link'
+          >
+            Assessments
+          </p>
           {/* when clicking this Test Reports text, it'll navigates to test reports route */}
-          <p onClick={()=>navigate('/testReports',{state:finalData})} className="admin-desktop-header-navbar-link">Test Reports</p>
+          <p
+            onClick={() => navigate("/testReports", { state: finalData })}
+            className='admin-desktop-header-navbar-link'
+          >
+            Test Reports
+          </p>
           {/* when clicking this student reports text, it'll navigates to student reports route */}
-          <p onClick={()=>navigate('/studentReports',{state:finalData})} className="admin-desktop-header-navbar-link">Student Reports</p>
+          <p
+            onClick={() => navigate("/studentReports", { state: finalData })}
+            className='admin-desktop-header-navbar-link'
+          >
+            Student Reports
+          </p>
           {/* when clicking this Sign Out text, it'll navigates to admin login route and again admin can access all routes */}
-          <p className="admin-desktop-header-navbar-link" onClick={()=> navigate('/adminLogin')}>Admin</p>
+          <p
+            className='admin-desktop-header-navbar-link'
+            onClick={() => navigate("/adminLogin")}
+          >
+            Admin
+          </p>
         </div>
         {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
-        <div className="admin-mobile-header-navbar-container">
-            <Popup contentStyle={{ width: '50%',backgroundColor:"white" }} trigger={<button  className="admin-hamburger-btn"><GiHamburgerMenu /></button>} position="bottom right" >
-            <ul className="admin-mobile-hamburger-menu">
-              {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
-              <li onClick={()=>navigate('/dashboard',{state:finalData})} className='admin-header-navbar-link'>Dashboard</li>
-              {/* when clicking this Assessments text, it'll navigates to send assessments route */}
-              <li onClick={()=>navigate('/sendAssessments',{state:finalData})} className='admin-header-navbar-link'>Assessments</li>
-              {/* when clicking this Test Reports text, it'll navigates to test reports route */}
-              <li onClick={()=>navigate('/testReports',{state:finalData})} className='admin-header-navbar-link'>Test Reports</li>
-              {/* when clicking this student reports text, it'll navigates to student reports route */}
-              <li onClick={()=>navigate('/studentReports',{state:finalData})} className='admin-header-navbar-link'>Student Reports</li>
-              {/* when clicking this Sign Out text, it'll navigates to admin login route and again admin can access all routes */}
-              <li onClick={()=> navigate('/adminLogin')} className='admin-header-navbar-link'>Admin</li>
-            </ul>
-            </Popup>
-          </div>
-        </div>
-        <div className="assessment-container">
-          <div className="each-assessment-container">
-            {tests.map((each, index) => (
-              <div key={index} className="input-container">
-                <div className="assessmentContainerCheckboxContainer">
-                  <input
-                    type="radio"
-                    name="test"
-                    id={index}
-                    onChange={(e) => setActiveTest(e.target.value)}
-                    value={each}
-                    className='assessmentContainerCheckbox'
-                  />
-                  <label htmlFor={index} className='assessmentContainerCheckboxLabel'>{each}</label>
-                </div>
-                <input
-                  disabled={activeTest !== each}
-                  type="number"
-                  className="assessmentContainerInput"
-                  id={index}
-                  onChange={(e) => setStudentCount(e.target.value)}
-                  value={activeTest === each ? studentCount : ""}
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            variant="contained"
-            className="assessment-button m-3"
-            onClick={onClickProceed}
-          >
-            Proceed
-          </button>
-        </div>
-        <div className="each-input-student-details-container">
-          {proceeding &&
-            Array.from({ length: studentCount }, (_, index) => (
-              <EachCandidateInputField
-                key={index}
-                index={index} // Pass the index as a prop
-                onInputChange={(values) => handleInputChange(index, values)}
-              />
-            ))}
-          {proceeding && (
-            <div className="text-center">
-              <button onClick={handleClickOpen} className="send-assessment-button">
-                SEND ASSESSMENT
+        <div className='admin-mobile-header-navbar-container'>
+          <Popup
+            contentStyle={{ width: "50%", backgroundColor: "white" }}
+            trigger={
+              <button className='admin-hamburger-btn'>
+                <GiHamburgerMenu />
               </button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+            }
+            position='bottom right'
+          >
+            <ul className='admin-mobile-hamburger-menu'>
+              {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
+              <li
+                onClick={() => navigate("/dashboard", { state: finalData })}
+                className='admin-header-navbar-link'
               >
-                <DialogTitle id="alert-dialog-title">
-                  {"Are You Sure You Want To Send?"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    Let's Check onces before sending the assessment !
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Disagree</Button>
-                  <Button onClick={onClickSendAssessment} autoFocus>
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          )}
+                Dashboard
+              </li>
+              {/* when clicking this Assessments text, it'll navigates to send assessments route */}
+              <li
+                onClick={() =>
+                  navigate("/sendAssessments", { state: finalData })
+                }
+                className='admin-header-navbar-link'
+              >
+                Assessments
+              </li>
+              {/* when clicking this Test Reports text, it'll navigates to test reports route */}
+              <li
+                onClick={() => navigate("/testReports", { state: finalData })}
+                className='admin-header-navbar-link'
+              >
+                Test Reports
+              </li>
+              {/* when clicking this student reports text, it'll navigates to student reports route */}
+              <li
+                onClick={() =>
+                  navigate("/studentReports", { state: finalData })
+                }
+                className='admin-header-navbar-link'
+              >
+                Student Reports
+              </li>
+              {/* when clicking this Sign Out text, it'll navigates to admin login route and again admin can access all routes */}
+              <li
+                onClick={() => navigate("/adminLogin")}
+                className='admin-header-navbar-link'
+              >
+                Admin
+              </li>
+            </ul>
+          </Popup>
         </div>
+      </div>
+      <div className='assessment-container'>
+        <div className='each-assessment-container'>
+          {tests.map((each, index) => (
+            <div key={index} className='input-container'>
+              <div className='assessmentContainerCheckboxContainer'>
+                <input
+                  type='radio'
+                  name='test'
+                  id={index}
+                  onChange={(e) => setActiveTest(e.target.value)}
+                  value={each}
+                  className='assessmentContainerCheckbox'
+                />
+                <label
+                  htmlFor={index}
+                  className='assessmentContainerCheckboxLabel'
+                >
+                  {each}
+                </label>
+              </div>
+              <input
+                disabled={activeTest !== each}
+                type='number'
+                className='assessmentContainerInput'
+                id={index}
+                onChange={(e) => setStudentCount(e.target.value)}
+                value={activeTest === each ? studentCount : ""}
+              />
+            </div>
+          ))}
+        </div>
+        <button
+          variant='contained'
+          className='assessment-button m-3'
+          onClick={onClickProceed}
+        >
+          Proceed
+        </button>
+      </div>
+      <div className='each-input-student-details-container'>
+        {/* studentCount times adding EachCandidateInputField */}
+        {/* if proceeding is true then only EachCandidateInputField and sendAssessments button shows in the page */}
+        {proceeding &&
+          Array.from({ length: studentCount }, (_, index) => (
+            <EachCandidateInputField
+              key={index}
+              index={index} // Passing the index as a prop
+              onInputChange={(values) => handleInputChange(index, values)}
+            />
+          ))}
+        {proceeding && (
+          <div className='text-center'>
+            <button
+              onClick={handleClickOpen}
+              className='send-assessment-button'
+            >
+              SEND ASSESSMENT
+            </button>
+            {/* dialog box from material ui */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogTitle id='alert-dialog-title'>
+                {"Are You Sure You Want To Send?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  Let's Check onces before sending the assessment !
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Disagree</Button>
+                <Button onClick={onClickSendAssessment} autoFocus>
+                  Agree
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

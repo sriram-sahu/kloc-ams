@@ -28,60 +28,61 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* Home component */}
-        <Route path='/' element={<Home />} />
+        <Route path="/" element={<Home />} />
 
         {/* admin components */}
-        <Route path='/adminLogin' element={<AdminLogin />} />
-        <Route path='/testReports' element={<TestReports />} />
-        <Route path='/studentReports' element={<StudentReports />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/sendAssessments' element={<SendAssessments />} />
+        <Route path="/adminLogin" element={<AdminLogin />} />
+        <Route path="/testReports" element={<TestReports />} />
+        <Route path="/studentReports" element={<StudentReports />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/sendAssessments" element={<SendAssessments />} />
         {/* test tabulation components*/}
         <Route
-          path='testReports/freshers_junior_test'
+          path="testReports/freshers_junior_test"
           element={<FreshersJuniorTabulation />}
         />
         <Route
-          path='testReports/fresher_test'
+          path="testReports/fresher_test"
           element={<FreshersTabulation />}
         />
-        <Route path='testReports/fresher_qa_test' element={<QATabulation />} />
+        <Route path="testReports/fresher_qa_test" element={<QATabulation />} />
         <Route
-          path='testReports/fullstack_developer_test'
+          path="testReports/fullstack_developer_test"
           element={<FullStackTabulation />}
         />
         <Route
-          path='testReports/fresher_python_test'
+          path="testReports/fresher_python_test"
           element={<PythonTabulation />}
         />
         <Route
-          path='testReports/fresher_java_test'
+          path="testReports/fresher_java_test"
           element={<JavaTabulation />}
         />
         <Route
-          path='testReports/frontend_fresher_test'
+          path="testReports/frontend_fresher_test"
           element={<FrontEndFresherTabulation />}
         />
         <Route
-          path='testReports/shopify_developer_test'
+          path="testReports/shopify_developer_test"
           element={<ShopifyTabulation />}
         />
         <Route
-          path='testReports/mern_developer_junior'
+          path="testReports/mern_developer_junior"
           element={<MernDeveloperJuniorTabulation />}
         />
         <Route
-          path='testReports/mern_developer_intermediate'
+          path="testReports/mern_developer_intermediate"
           element={<MernDeveloperIntermediateTabulation />}
         />
-        <Route path='/notFound' element={<NotFound />} />
+        <Route path="/notFound" element={<NotFound />} />
         {/* PieChart component */}
-        <Route path='/studentChart' element={<Chart />} />
+        <Route path="/studentChart" element={<Chart />} />
 
         {/* student components */}
-        <Route path='/studentLogin' element={<StudentLogin />} />
-
-        <Route path='/test/:testName' element={<AllTests />} />
+        <Route path="/studentLogin" element={<StudentLogin />} />
+        {/* test component */}
+        <Route path="/test/:testName" element={<AllTests />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

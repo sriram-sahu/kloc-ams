@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { gapi } from "gapi-script";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -9,20 +10,21 @@ import "./index.css";
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 const AdminLogin = () => {
-  const [fresherData,setFresherData]=useState([])
-  const [pythonData,setPythonData]=useState([])
-  const [fullStackData,setFullStackData]=useState([])
-  const [shopifyData,setShopifyData]=useState([])
-  const [mernDeveloperIntermediateData,setMernDeveloperIntermediateData]=useState([])
-  const [frontEndFresherData,setfrontEndFresherData]=useState([])
-  const [javaData,setJavaData]=useState([])
-  const [mernDeveloperJuniorData,setMernDeveloperJuniorData]=useState([])
-  const [qaData,setQAData]=useState([])
-  const [freshersJuniorData,setFreshersJuniorData]=useState([])
+  const [fresherData, setFresherData] = useState([]);
+  const [pythonData, setPythonData] = useState([]);
+  const [fullStackData, setFullStackData] = useState([]);
+  const [shopifyData, setShopifyData] = useState([]);
+  const [mernDeveloperIntermediateData, setMernDeveloperIntermediateData] =
+    useState([]);
+  const [frontEndFresherData, setfrontEndFresherData] = useState([]);
+  const [javaData, setJavaData] = useState([]);
+  const [mernDeveloperJuniorData, setMernDeveloperJuniorData] = useState([]);
+  const [qaData, setQAData] = useState([]);
+  const [freshersJuniorData, setFreshersJuniorData] = useState([]);
   const [userEmail, setUserEmail] = useState("");
-  // usestate to store boolean value of signedIn status of client
+  // useState to store boolean value of signedIn status of client
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadGoogleAPI = () => {
@@ -49,7 +51,6 @@ const AdminLogin = () => {
           ],
         })
         .then(() => {
-          console.log("Google API client initialized");
           const authInstance = window.gapi.auth2.getAuthInstance();
           setIsSignedIn(authInstance.isSignedIn.get());
           authInstance.isSignedIn.listen(updateSignInStatus);
@@ -60,10 +61,10 @@ const AdminLogin = () => {
           executeRequestFrontEndFresherTest();
           executeRequestFullStackTest();
           executeRequestMernDeveloperIntermediateTest();
-          executeRequestJavaTest()
-          executeRequestMernDeveloperJuniorTest()
-          executeRequestQATest()
-          executeRequestFreshersJuniorTest()
+          executeRequestJavaTest();
+          executeRequestMernDeveloperJuniorTest();
+          executeRequestQATest();
+          executeRequestFreshersJuniorTest();
           getUserEmail();
         })
         .catch((error) => {
@@ -397,369 +398,389 @@ const AdminLogin = () => {
     loadGoogleAPI();
   }, []);
 
-  const fetchFresherData=()=>{
-    fresherData.map((item,index)=>{
-    let aptitude_score  = 0 
-    let technical_score = 0 
-    const aptitude  = JSON.parse(process.env.REACT_APP_FRESHER_TEST_APTITUDE_QUESTIONS_ANSWERS) 
-    const technical = JSON.parse(process.env.REACT_APP_FRESHER_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    Object.keys(item).map((_,i) =>{
-     if(i>5 && i<26){
-        if((i-5) in aptitude){
-             if(item[_]===aptitude[i-5]){
-                 aptitude_score+=1
-             }
-        }
-     }else if(i>25 && i<56){
-        if((i-25) in technical){
-             if(item[_]===technical[i-25]){
-                 technical_score +=1
-             }
-        }
-     }
-    })
-     item.aptitude_score = aptitude_score
-     item.technical_score =  technical_score
-     item.total_score =  aptitude_score + technical_score
-     item.testType='Freshers Test'
-   })
-  }
-
-  useEffect(()=>{
-    fetchFresherData()
-  },[fresherData])
-  console.log(fresherData)
-
-  const fetchPythonData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_PYTHON_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_PYTHON_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    pythonData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<31){
-                if ((i-5) in aptitude){
-                    // console.log(item[score])
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>30 && i<56){
-                if ((i-30) in technical){ 
-                    // console.log(item[score])   
-                    // console.log(technical[i-30])           
-                    if (item[score]===technical[i-30]){
-                        technical_score+=1
-                    }
-                }
+  const fetchFresherData = () => {
+    fresherData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      const aptitude = JSON.parse(
+        process.env.REACT_APP_FRESHER_TEST_APTITUDE_QUESTIONS_ANSWERS
+      );
+      const technical = JSON.parse(
+        process.env.REACT_APP_FRESHER_TEST_TECHNICAL_QUESTIONS_ANSWERS
+      );
+      Object.keys(item).map((_, i) => {
+        if (i > 5 && i < 26) {
+          if (i - 5 in aptitude) {
+            if (item[_] === aptitude[i - 5]) {
+              aptitude_score += 1;
             }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score=item.aptitude_score+item.technical_score
-        item.testType='Python Test'
-    })
-  }
-  useEffect(()=>{
-    fetchPythonData()
-  },[pythonData])
-  // console.log(pythonData)
-
-  const fetchShopifyData=()=>{
-    shopifyData.map((item,index)=>{
-      let aptitude_score  = 0 
-      let technical_score = 0 
-      const aptitude  = JSON.parse(process.env.REACT_APP_SHOPIFY_APTITUDE_QUESTIONS_ANSWERS) 
-      const technical = JSON.parse(process.env.REACT_APP_SHOPIFY_TECHNICAL_QUESTIONS_ANSWERS)
-      Object.keys(item).map((_,i) =>{
-      if(i>5 && i<16){
-          if((i-5) in aptitude){
-              if(item[_]===aptitude[i-5]){
-                  aptitude_score+=1
-              }
           }
-      }else if(i>15 && i<46){
-          if((i-15) in technical){
-              if(item[_]===technical[i-15]){ 
-                  technical_score +=1
-              }
+        } else if (i > 25 && i < 56) {
+          if (i - 25 in technical) {
+            if (item[_] === technical[i - 25]) {
+              technical_score += 1;
+            }
           }
-      }    
-      })
-      item.aptitude_score = aptitude_score
-      item.technical_score =  technical_score
-      item.total_score =  aptitude_score + technical_score
-      item.testType='Shopify Test'
-  })
-  }
-
-  useEffect(()=>{
-    fetchShopifyData()
-  },[shopifyData])
-
-  const fetchFrontEndFresherData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_FRONTEND_FRESHER_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_FRONTEND_FRESHER_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    frontEndFresherData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<16){
-              // console.log(item[score],i-5)
-              // console.log(aptitude[i-5],i-5)
-                if ((i-5) in aptitude){
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>15 && i<56){
-                if ((i-15) in technical){          
-                    if (item[score]===technical[i-15]){
-                        technical_score+=1
-                    }
-                }
-            }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score =  aptitude_score + technical_score
-        item.testType='Front End Fresher Test'
-    })
-  }
-
-  useEffect(()=>{
-    fetchFrontEndFresherData()
-  },[frontEndFresherData])
-console.log(frontEndFresherData)
-
-const fetchFullStackData=()=>{
-  fullStackData.map((item,index)=>{
-    let fullstack_java_score = 0 
-    let fullstack_react_score  = 0
-    const fullstack_java = JSON.parse(process.env.REACT_APP_FULLSTACK_JAVA_QUESTIONS_ANSWERS)
-    const fullstack_react = JSON.parse(process.env.REACT_APP_FULLSTACK_REACT_QUESTIONS_ANSWERS)
-    Object.keys(item).map((_,i)=>{
-        if(i>5 && i<31){
-            if(item[_]===fullstack_react[i-5]){
-                fullstack_react_score +=1
-            }
-        }else if(i>30 && i<57){
-            if([i-30] in fullstack_java){
-                if(item[_]===fullstack_java[i-30]){
-                    fullstack_java_score +=1
-                }
-            }
         }
-    })
-    item.fullstack_java_score = fullstack_java_score
-    item.fullstack_react_score  = fullstack_react_score
-    item.total_score = fullstack_java_score+fullstack_react_score
-    item.testType='Full Stack Test'
-})
-}
+      });
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "Freshers Test";
+    });
+  };
 
-useEffect(()=>{
-  fetchFullStackData()
-},[fullStackData])
+  useEffect(() => {
+    fetchFresherData();
+  }, [fresherData]);
 
-  const fetchMernDeveloperIntermediateData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_MERN_DEVELOPER_INTERMEDIATE_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_MERN_DEVELOPER_INTERMEDIATE_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    mernDeveloperIntermediateData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<16){
-                if ((i-5) in aptitude){
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>15 && i<56){
-                if ((i-15) in technical){           
-                    if (item[score]===technical[i-15]){
-                        technical_score+=1
-                    }
-                }
+  const fetchPythonData = () => {
+    let aptitude = JSON.parse(
+      process.env.REACT_APP_PYTHON_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env.REACT_APP_PYTHON_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    pythonData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 31) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
             }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score =  aptitude_score + technical_score
-        item.testType='MERN Developer Intermediate Test'
-    })
-  }
-
-  useEffect(()=>{
-    fetchMernDeveloperIntermediateData()
-  },[mernDeveloperIntermediateData])
-
-  const fetchJavaData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_JAVA_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_JAVA_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    javaData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<31){
-                if ((i-5) in aptitude){
-                    // console.log(item[score])
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>30 && i<56){
-                if ((i-30) in technical){ 
-                    // console.log(item[score])   
-                    // console.log(technical[i-30])           
-                    if (item[score]===technical[i-30]){
-                        technical_score+=1
-                    }
-                }
+          }
+        } else if (i > 30 && i < 56) {
+          if (i - 30 in technical) {
+            if (item[score] === technical[i - 30]) {
+              technical_score += 1;
             }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score =  aptitude_score + technical_score
-        item.testType='Java Test'
-    })
-  }
-  useEffect(()=>{
-    fetchJavaData()
-  },[javaData])
-  // console.log(javaData)
+          }
+        }
+      });
 
-  const fetchMernDeveloperJuniorData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_MERN_DEVELOPER_JUNIOR_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_MERN_DEVELOPER_JUNIOR_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    mernDeveloperJuniorData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<16){
-              // console.log(item[score],i-5)
-              // console.log(aptitude[i-5],i-5)
-                if ((i-5) in aptitude){
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>15 && i<56){
-                if ((i-15) in technical){           
-                    if (item[score]===technical[i-15]){
-                        technical_score+=1
-                    }
-                }
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = item.aptitude_score + item.technical_score;
+      item.testType = "Python Test";
+    });
+  };
+  useEffect(() => {
+    fetchPythonData();
+  }, [pythonData]);
+
+  const fetchShopifyData = () => {
+    shopifyData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      const aptitude = JSON.parse(
+        process.env.REACT_APP_SHOPIFY_APTITUDE_QUESTIONS_ANSWERS
+      );
+      const technical = JSON.parse(
+        process.env.REACT_APP_SHOPIFY_TECHNICAL_QUESTIONS_ANSWERS
+      );
+      Object.keys(item).map((_, i) => {
+        if (i > 5 && i < 16) {
+          if (i - 5 in aptitude) {
+            if (item[_] === aptitude[i - 5]) {
+              aptitude_score += 1;
             }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score =  aptitude_score + technical_score
-        item.testType='MERN Developer Junior Test'
-    })
-  }
-
-  useEffect(()=>{
-    fetchMernDeveloperJuniorData()
-  },[mernDeveloperJuniorData])
-
-  const fetchQAData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_QA_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let technical=JSON.parse(process.env.REACT_APP_QA_TEST_TECHNICAL_QUESTIONS_ANSWERS)
-    qaData.map((item,index)=>{
-        let aptitude_score=0
-        let technical_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<16){
-              // console.log(item[score],i-5)
-              // console.log(aptitude[i-5],i-5)
-                if ((i-5) in aptitude){
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>15 && i<56){
-              console.log(item[score],i-15)
-              console.log(technical[i-15],i-15)
-              console.log(item[score]===technical[i-15])
-                if ((i-15) in technical){           
-                    if (item[score]===technical[i-15]){
-                        technical_score+=1
-                    }
-                }
+          }
+        } else if (i > 15 && i < 46) {
+          if (i - 15 in technical) {
+            if (item[_] === technical[i - 15]) {
+              technical_score += 1;
             }
-        })
-        console.log('aptitude_score',aptitude_score)
-        console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.technical_score=technical_score
-        item.total_score =  aptitude_score + technical_score
-        item.testType='QA Test'
-    })
-  }
+          }
+        }
+      });
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "Shopify Test";
+    });
+  };
 
-  useEffect(()=>{
-    fetchQAData()
-  },[qaData])
+  useEffect(() => {
+    fetchShopifyData();
+  }, [shopifyData]);
 
-  const fetchFreshersJuniorData=()=>{
-    let aptitude=JSON.parse(process.env.REACT_APP_FRESHERS_JUNIOR_TEST_APTITUDE_QUESTIONS_ANSWERS)
-    let reasoning=JSON.parse(process.env.REACT_APP_FRESHERS_JUNIOR_TEST_REASONING_QUESTIONS_ANSWERS)
-    freshersJuniorData.map((item,index)=>{
-        let aptitude_score=0
-        let reasoning_score=0
-        Object.keys(item).map((score,i)=>{
-            if (i>5 && i<31){
-                if ((i-5) in aptitude){
-                    // console.log(item[score])
-                    if (item[score]===aptitude[i-5]){
-                        aptitude_score+=1
-                    }
-                }
-            }else if(i>30 && i<56){
-                if ((i-30) in reasoning){ 
-                    // console.log(item[score])   
-                    // console.log(technical[i-30])           
-                    if (item[score]===reasoning[i-30]){
-                        reasoning_score+=1
-                    }
-                }
+  const fetchFrontEndFresherData = () => {
+    let aptitude = JSON.parse(
+      process.env.REACT_APP_FRONTEND_FRESHER_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env.REACT_APP_FRONTEND_FRESHER_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    frontEndFresherData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 16) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
             }
-        })
-        // console.log('aptitude_score',aptitude_score)
-        // console.log('technical_score',technical_score)
-        item.aptitude_score=aptitude_score
-        item.reasoning_score=reasoning_score
-        item.total_score =  aptitude_score + reasoning_score
-        item.testType='Freshers Junior Test'
-    })
-  }
-  useEffect(()=>{
-    fetchFreshersJuniorData()
-  },[freshersJuniorData])
+          }
+        } else if (i > 15 && i < 56) {
+          if (i - 15 in technical) {
+            if (item[score] === technical[i - 15]) {
+              technical_score += 1;
+            }
+          }
+        }
+      });
 
-  let allData=[]
-  allData.push(fresherData)
-  allData.push(pythonData)
-  allData.push(shopifyData)
-  allData.push(frontEndFresherData)
-  allData.push(mernDeveloperIntermediateData)
-  allData.push(fullStackData)
-  allData.push(javaData)
-  allData.push(mernDeveloperJuniorData)
-  allData.push(qaData)
-  allData.push(freshersJuniorData)
-  console.log(allData)
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "Front End Fresher Test";
+    });
+  };
+
+  useEffect(() => {
+    fetchFrontEndFresherData();
+  }, [frontEndFresherData]);
+  console.log(frontEndFresherData);
+
+  const fetchFullStackData = () => {
+    fullStackData.map((item, index) => {
+      let fullstack_java_score = 0;
+      let fullstack_react_score = 0;
+      const fullstack_java = JSON.parse(
+        process.env.REACT_APP_FULLSTACK_JAVA_QUESTIONS_ANSWERS
+      );
+      const fullstack_react = JSON.parse(
+        process.env.REACT_APP_FULLSTACK_REACT_QUESTIONS_ANSWERS
+      );
+      Object.keys(item).map((_, i) => {
+        if (i > 5 && i < 31) {
+          if (item[_] === fullstack_react[i - 5]) {
+            fullstack_react_score += 1;
+          }
+        } else if (i > 30 && i < 57) {
+          if ([i - 30] in fullstack_java) {
+            if (item[_] === fullstack_java[i - 30]) {
+              fullstack_java_score += 1;
+            }
+          }
+        }
+      });
+      item.fullstack_java_score = fullstack_java_score;
+      item.fullstack_react_score = fullstack_react_score;
+      item.total_score = fullstack_java_score + fullstack_react_score;
+      item.testType = "Full Stack Test";
+    });
+  };
+
+  useEffect(() => {
+    fetchFullStackData();
+  }, [fullStackData]);
+
+  const fetchMernDeveloperIntermediateData = () => {
+    let aptitude = JSON.parse(
+      process.env
+        .REACT_APP_MERN_DEVELOPER_INTERMEDIATE_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env
+        .REACT_APP_MERN_DEVELOPER_INTERMEDIATE_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    mernDeveloperIntermediateData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 16) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
+            }
+          }
+        } else if (i > 15 && i < 56) {
+          if (i - 15 in technical) {
+            if (item[score] === technical[i - 15]) {
+              technical_score += 1;
+            }
+          }
+        }
+      });
+
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "MERN Developer Intermediate Test";
+    });
+  };
+
+  useEffect(() => {
+    fetchMernDeveloperIntermediateData();
+  }, [mernDeveloperIntermediateData]);
+
+  const fetchJavaData = () => {
+    let aptitude = JSON.parse(
+      process.env.REACT_APP_JAVA_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env.REACT_APP_JAVA_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    javaData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 31) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
+            }
+          }
+        } else if (i > 30 && i < 56) {
+          if (i - 30 in technical) {
+            if (item[score] === technical[i - 30]) {
+              technical_score += 1;
+            }
+          }
+        }
+      });
+
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "Java Test";
+    });
+  };
+  useEffect(() => {
+    fetchJavaData();
+  }, [javaData]);
+
+  const fetchMernDeveloperJuniorData = () => {
+    let aptitude = JSON.parse(
+      process.env
+        .REACT_APP_MERN_DEVELOPER_JUNIOR_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env
+        .REACT_APP_MERN_DEVELOPER_JUNIOR_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    mernDeveloperJuniorData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 16) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
+            }
+          }
+        } else if (i > 15 && i < 56) {
+          if (i - 15 in technical) {
+            if (item[score] === technical[i - 15]) {
+              technical_score += 1;
+            }
+          }
+        }
+      });
+
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "MERN Developer Junior Test";
+    });
+  };
+
+  useEffect(() => {
+    fetchMernDeveloperJuniorData();
+  }, [mernDeveloperJuniorData]);
+
+  const fetchQAData = () => {
+    let aptitude = JSON.parse(
+      process.env.REACT_APP_QA_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let technical = JSON.parse(
+      process.env.REACT_APP_QA_TEST_TECHNICAL_QUESTIONS_ANSWERS
+    );
+    qaData.map((item, index) => {
+      let aptitude_score = 0;
+      let technical_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 16) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
+            }
+          }
+        } else if (i > 15 && i < 56) {
+          console.log(item[score], i - 15);
+          console.log(technical[i - 15], i - 15);
+          console.log(item[score] === technical[i - 15]);
+          if (i - 15 in technical) {
+            if (item[score] === technical[i - 15]) {
+              technical_score += 1;
+            }
+          }
+        }
+      });
+      console.log("aptitude_score", aptitude_score);
+      console.log("technical_score", technical_score);
+      item.aptitude_score = aptitude_score;
+      item.technical_score = technical_score;
+      item.total_score = aptitude_score + technical_score;
+      item.testType = "QA Test";
+    });
+  };
+
+  useEffect(() => {
+    fetchQAData();
+  }, [qaData]);
+
+  const fetchFreshersJuniorData = () => {
+    let aptitude = JSON.parse(
+      process.env.REACT_APP_FRESHERS_JUNIOR_TEST_APTITUDE_QUESTIONS_ANSWERS
+    );
+    let reasoning = JSON.parse(
+      process.env.REACT_APP_FRESHERS_JUNIOR_TEST_REASONING_QUESTIONS_ANSWERS
+    );
+    freshersJuniorData.map((item, index) => {
+      let aptitude_score = 0;
+      let reasoning_score = 0;
+      Object.keys(item).map((score, i) => {
+        if (i > 5 && i < 31) {
+          if (i - 5 in aptitude) {
+            if (item[score] === aptitude[i - 5]) {
+              aptitude_score += 1;
+            }
+          }
+        } else if (i > 30 && i < 56) {
+          if (i - 30 in reasoning) {
+            if (item[score] === reasoning[i - 30]) {
+              reasoning_score += 1;
+            }
+          }
+        }
+      });
+
+      item.aptitude_score = aptitude_score;
+      item.reasoning_score = reasoning_score;
+      item.total_score = aptitude_score + reasoning_score;
+      item.testType = "Freshers Junior Test";
+    });
+  };
+  useEffect(() => {
+    fetchFreshersJuniorData();
+  }, [freshersJuniorData]);
+
+  let allData = [];
+  allData.push(fresherData);
+  allData.push(pythonData);
+  allData.push(shopifyData);
+  allData.push(frontEndFresherData);
+  allData.push(mernDeveloperIntermediateData);
+  allData.push(fullStackData);
+  allData.push(javaData);
+  allData.push(mernDeveloperJuniorData);
+  allData.push(qaData);
+  allData.push(freshersJuniorData);
+  console.log(allData);
 
   const handleSignIn = () => {
     const authInstance = window.gapi.auth2.getAuthInstance();
@@ -768,19 +789,18 @@ useEffect(()=>{
         console.error("Popup Closed By the User", error);
       } else {
         console.error("Error signing in with Google", error);
-        // Handle other sign-in errors
       }
     });
   };
 
-  // handleSignOut function used to signout of admin google account
+  // handleSignOut function used to signOut of admin google account
   const handleSignOut = () => {
     Cookies.remove("token");
     const authInstance = window.gapi.auth2.getAuthInstance();
     authInstance.signOut();
   };
 
-  const datat={
+  const datat = {
     fresherData,
     pythonData,
     mernDeveloperIntermediateData,
@@ -790,12 +810,13 @@ useEffect(()=>{
     javaData,
     mernDeveloperJuniorData,
     qaData,
-    freshersJuniorData
-  }
-  console.log(datat)
-  let finalData={
-    allData,datat
-  }
+    freshersJuniorData,
+  };
+  console.log(datat);
+  let finalData = {
+    allData,
+    datat,
+  };
 
   return (
     <div>
@@ -803,13 +824,13 @@ useEffect(()=>{
         <p>
           {isSignedIn ? (
             // if admin has signedIn, the below code will render
-            <div className='admin-header-container'>
+            <div className="admin-header-container">
               {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Sign Out */}
-              <div className='admin-header-logo-container'>
+              <div className="admin-header-logo-container">
                 {/* logo */}
                 <img
-                  src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
-                  alt='logo'
+                  src="https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png"
+                  alt="logo"
                   style={{
                     height: "50px",
                     width: "100px",
@@ -818,11 +839,11 @@ useEffect(()=>{
                   onClick={() => navigate("/")}
                 />
               </div>
-              <div className='admin-desktop-header-navbar-container'>
+              <div className="admin-desktop-header-navbar-container">
                 {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
                 <p
                   onClick={() => navigate("/dashboard", { state: finalData })}
-                  className='admin-desktop-header-navbar-link'
+                  className="admin-desktop-header-navbar-link"
                 >
                   Dashboard
                 </p>
@@ -831,14 +852,14 @@ useEffect(()=>{
                   onClick={() =>
                     navigate("/sendAssessments", { state: finalData })
                   }
-                  className='admin-desktop-header-navbar-link'
+                  className="admin-desktop-header-navbar-link"
                 >
                   Assessments
                 </p>
                 {/* when clicking this Test Reports text, it'll navigates to test reports route */}
                 <p
                   onClick={() => navigate("/testReports", { state: finalData })}
-                  className='admin-desktop-header-navbar-link'
+                  className="admin-desktop-header-navbar-link"
                 >
                   Test Reports
                 </p>
@@ -847,34 +868,34 @@ useEffect(()=>{
                   onClick={() =>
                     navigate("/studentReports", { state: finalData })
                   }
-                  className='admin-desktop-header-navbar-link'
+                  className="admin-desktop-header-navbar-link"
                 >
                   Student Reports
                 </p>
                 {/* when clicking this Sign Out text, it'll navigates to admin login route and agains admin needs to sign in to access all routes */}
                 <p
-                  className='admin-desktop-header-navbar-link'
+                  className="admin-desktop-header-navbar-link"
                   onClick={handleSignOut}
                 >
                   Sign Out
                 </p>
               </div>
-              <div className='admin-mobile-header-navbar-container'>
+              <div className="admin-mobile-header-navbar-container">
                 <Popup
                   contentStyle={{ width: "50%", backgroundColor: "white" }}
                   trigger={
-                    <button className='admin-hamburger-btn'>
+                    <button className="admin-hamburger-btn">
                       <GiHamburgerMenu />
                     </button>
                   }
-                  position='bottom right'
+                  position="bottom right"
                 >
-                  <ul className='admin-mobile-hamburger-menu'>
+                  <ul className="admin-mobile-hamburger-menu">
                     <li
                       onClick={() =>
                         navigate("/dashboard", { state: finalData })
                       }
-                      className='admin-header-navbar-link'
+                      className="admin-header-navbar-link"
                     >
                       Dashboard
                     </li>
@@ -882,7 +903,7 @@ useEffect(()=>{
                       onClick={() =>
                         navigate("/sendAssessments", { state: finalData })
                       }
-                      className='admin-header-navbar-link'
+                      className="admin-header-navbar-link"
                     >
                       Assessments
                     </li>
@@ -890,21 +911,21 @@ useEffect(()=>{
                       onClick={() =>
                         navigate("/testReports", { state: finalData })
                       }
-                      className='admin-header-navbar-link'
+                      className="admin-header-navbar-link"
                     >
-                      Test Resports
+                      Test Reports
                     </li>
                     <li
                       onClick={() =>
                         navigate("/studentReports", { state: finalData })
                       }
-                      className='admin-header-navbar-link'
+                      className="admin-header-navbar-link"
                     >
-                      Student Resports
+                      Student Reports
                     </li>
                     <li
                       onClick={handleSignOut}
-                      className='admin-header-navbar-link'
+                      className="admin-header-navbar-link"
                     >
                       Sign Out
                     </li>
@@ -913,18 +934,18 @@ useEffect(()=>{
               </div>
             </div>
           ) : (
-             // if admin hasn't signedIn, the below code will render
-             <div className='display-column'>
-             <h2>Login With Google</h2>
-             {/* if admin clicks this button, he can sign in into his account and get access for all routes */}
-             <button onClick={handleSignIn} className='google-signin-button'>
-               <img
-                 src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
-                 alt='Google Logo'
-               />
-               Sign In with Google
-             </button>
-           </div>
+            // if admin hasn't signedIn, the below code will render
+            <div className="display-column">
+              <h2>Login With Google</h2>
+              {/* if admin clicks this button, he can sign in into his account and get access for all routes */}
+              <button onClick={handleSignIn} className="google-signin-button">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                  alt="Google Logo"
+                />
+                Sign In with Google
+              </button>
+            </div>
           )}
         </p>
       </div>

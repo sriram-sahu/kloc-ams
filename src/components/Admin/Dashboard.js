@@ -66,7 +66,7 @@ const Dashboard = () => {
   let python_aptitude_percentage = 0; //this variable stores the data , percentage of apitude score who took Pythontest
   let python_technical_percentage = 0; //this variable stores the data , percentage of Technical score who took Pythontest
 
-  // this calculation for correct reponses by the candidate in Python test
+  // this calculation for correct responses by the candidate in Python test
   data.pythonData?.map((item, index) => {
     python_aptitude_score += item.aptitude_score;
     python_technical_score += item.technical_score;
@@ -404,69 +404,69 @@ const Dashboard = () => {
   return (
     <>
       {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
-      <div className='admin-header-container'>
-        <div className='admin-header-logo-container'>
+      <div className="admin-header-container">
+        <div className="admin-header-logo-container">
           {/* logo */}
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
-            alt='logo'
+            src="https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png"
+            alt="logo"
             style={{ height: "50px", width: "100px", borderRadius: "10px" }}
             onClick={() => navigate("/")}
           />
         </div>
-        <div className='admin-desktop-header-navbar-container'>
+        <div className="admin-desktop-header-navbar-container">
           {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
           <p
             onClick={() => navigate("/dashboard", { state: finalData })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Dashboard
           </p>
           {/* when clicking this Assessments text, it'll navigates to send assessments route */}
           <p
             onClick={() => navigate("/sendAssessments", { state: finalData })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Assessments
           </p>
           {/* when clicking this Test Reports text, it'll navigates to test reports route */}
           <p
             onClick={() => navigate("/testReports", { state: finalData })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Test Reports
           </p>
           {/* when clicking this student reports text, it'll navigates to student reports route */}
           <p
             onClick={() => navigate("/studentReports", { state: finalData })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Student Reports
           </p>
           {/* when clicking this Sign Out text, it'll navigates to admin login route and again admin can access all routes */}
           <p
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
             onClick={() => navigate("/adminLogin")}
           >
             Admin
           </p>
         </div>
         {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
-        <div className='admin-mobile-header-navbar-container'>
+        <div className="admin-mobile-header-navbar-container">
           <Popup
             contentStyle={{ width: "50%", backgroundColor: "white" }}
             trigger={
-              <button className='admin-hamburger-btn'>
+              <button className="admin-hamburger-btn">
                 <GiHamburgerMenu />
               </button>
             }
-            position='bottom right'
+            position="bottom right"
           >
-            <ul className='admin-mobile-hamburger-menu'>
+            <ul className="admin-mobile-hamburger-menu">
               {/* when clicking this Dashboard text, it'll navigates to dashboard route */}
               <li
                 onClick={() => navigate("/dashboard", { state: finalData })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Dashboard
               </li>
@@ -475,14 +475,14 @@ const Dashboard = () => {
                 onClick={() =>
                   navigate("/sendAssessments", { state: finalData })
                 }
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Assessments
               </li>
               {/* when clicking this Test Reports text, it'll navigates to test reports route */}
               <li
                 onClick={() => navigate("/testReports", { state: finalData })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Test Reports
               </li>
@@ -491,14 +491,14 @@ const Dashboard = () => {
                 onClick={() =>
                   navigate("/studentReports", { state: finalData })
                 }
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Student Reports
               </li>
               {/* when clicking this Sign Out text, it'll navigates to admin login route and again admin can access all routes */}
               <li
                 onClick={() => navigate("/adminLogin")}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Admin
               </li>
@@ -519,81 +519,81 @@ const Dashboard = () => {
         >
           AMS METRICS
         </h1>
-        <h2 className='allmetricsHeading'>
+        <h2 className="allmetricsHeading">
           Below Metric is about number of tests taken by student for each test
           in percentage
         </h2>
-        <div className='piechart-details'>
-          <div className='test-legend'>
-            <button className='color'></button>
-            <span className='test'>Python Test</span>
+        <div className="piechart-details">
+          <div className="test-legend">
+            <button className="color"></button>
+            <span className="test">Python Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
               style={{ backgroundColor: "#e62e81" }}
-              className='color'
+              className="color"
             ></button>
-            <span className='test'>Java Test</span>
+            <span className="test">Java Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
               style={{ backgroundColor: "#5c9ed1" }}
-              className='color'
+              className="color"
             ></button>
-            <span className='test'>FullStack Test</span>
+            <span className="test">FullStack Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#963596" }}
             ></button>
-            <span className='test'>QA Test</span>
+            <span className="test">QA Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#2b8a3c" }}
             ></button>
-            <span className='test'>Frontend Fresher Test</span>
+            <span className="test">Frontend Fresher Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#0e3ab3" }}
             ></button>
-            <span className='test'>Freshers Junior Test</span>
+            <span className="test">Freshers Junior Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#f05232" }}
             ></button>
-            <span className='test'>Freshers Test</span>
+            <span className="test">Freshers Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#62b027" }}
             ></button>
-            <span className='test'>MERN Developer Intermediate Test</span>
+            <span className="test">MERN Developer Intermediate Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#b02709" }}
             ></button>
-            <span className='test'>MERN Developer Junior Test</span>
+            <span className="test">MERN Developer Junior Test</span>
           </div>
-          <div className='test-legend'>
+          <div className="test-legend">
             <button
-              className='color'
+              className="color"
               style={{ backgroundColor: "#102061" }}
             ></button>
-            <span className='test'>Shopify Developer Test</span>
+            <span className="test">Shopify Developer Test</span>
           </div>
         </div>
         <div style={{ textAlign: "center" }}>
-          <button className='totaltestconductedbutton'>
+          <button className="totaltestconductedbutton">
             Total Tests Conducted:
             {fresher +
               fullStack +
@@ -607,10 +607,10 @@ const Dashboard = () => {
               merndeveloperjunior}
           </button>
         </div>
-        <div className='test-chart'>
+        <div className="test-chart">
           <Chart
-            className='allstremsPiechart'
-            chartType='PieChart'
+            className="allstremsPiechart"
+            chartType="PieChart"
             data={pieData}
             options={{
               colors: [
@@ -631,51 +631,51 @@ const Dashboard = () => {
           ></Chart>
         </div>
       </div>
-      <h3 className='allmetricsHeading'>
+      <h3 className="allmetricsHeading">
         Below Metrics are about percentage of each section which are correctly
         answered by students of different tests
       </h3>
-      <div className='piechart-details'>
-        <div className='test-legend'>
+      <div className="piechart-details">
+        <div className="test-legend">
           <button
-            className='color'
+            className="color"
             style={{ backgroundColor: "#aed25d" }}
           ></button>
-          <span className='test'>Aptitude</span>
+          <span className="test">Aptitude</span>
         </div>
-        <div className='test-legend'>
+        <div className="test-legend">
           <button
-            className='color'
+            className="color"
             style={{ backgroundColor: "#6f6fed" }}
           ></button>
-          <span className='test'>Technical</span>
+          <span className="test">Technical</span>
         </div>
-        <div className='test-legend'>
+        <div className="test-legend">
           <button
-            className='color'
+            className="color"
             style={{ backgroundColor: "#9f93ed" }}
           ></button>
-          <span className='test'>Reasoing</span>
+          <span className="test">Reasoing</span>
         </div>
-        <div className='test-legend'>
+        <div className="test-legend">
           <button
-            className='color'
+            className="color"
             style={{ backgroundColor: "#468f0a" }}
           ></button>
-          <span className='test'>Java</span>
+          <span className="test">Java</span>
         </div>
-        <div className='test-legend'>
+        <div className="test-legend">
           <button
-            className='color'
+            className="color"
             style={{ backgroundColor: "#4d71bd" }}
           ></button>
-          <span className='test'>React</span>
+          <span className="test">React</span>
         </div>
       </div>
-      <div className='dashboard_chart_container'>
+      <div className="dashboard_chart_container">
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={fresherPieData}
           options={{
             title: "Fresher Test Metrics",
@@ -684,8 +684,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={pythonPieData}
           options={{
             title: "Python Test Metrics",
@@ -694,8 +694,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={fullStackPieData}
           options={{
             title: "FullStack Test Metrics",
@@ -704,8 +704,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={javaPieData}
           options={{
             title: "Java Test Metrics",
@@ -714,8 +714,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={qaPieData}
           options={{
             title: "QA Test Metrics",
@@ -724,8 +724,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={frontendfresherPieData}
           options={{
             title: "FroentFresher Test Metrics",
@@ -735,8 +735,8 @@ const Dashboard = () => {
         />
 
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={freshersJuniorPieData}
           options={{
             title: "FresherJunior Test Metrics",
@@ -745,8 +745,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={merndeveloperJuniorPieData}
           options={{
             title: "MernDeveloper Junior Test Metrics",
@@ -755,8 +755,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={merndeveloperintermediatePieData}
           options={{
             title: "MernDeveloperIntermediate Test Metrics",
@@ -765,8 +765,8 @@ const Dashboard = () => {
           }}
         />
         <Chart
-          className='testwisePiechart'
-          chartType='PieChart'
+          className="testwisePiechart"
+          chartType="PieChart"
           data={shopifyPieData}
           options={{
             title: "Shopify Test Metrics",

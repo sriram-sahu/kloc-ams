@@ -35,94 +35,96 @@ function StudentReports() {
   const filteredData = filterData.filter((i) =>
     i.Email_Address.toLowerCase().includes(search.toLowerCase())
   );
-
+  // this useEffect snippet is used validating the admin or not by using cookies
+  // cookies is already set when the admin Login success
   useEffect(() => {
     const token = Cookies.get("token");
+    // if token is not in system it will redirects to notFound route
     if (!token) {
       navigate("/notFound");
     }
   }, []);
   return (
-    <div className='student-reports-container'>
-      <div className='admin-header-container'>
-        <div className='admin-header-logo-container'>
+    <div className="student-reports-container">
+      <div className="admin-header-container">
+        <div className="admin-header-logo-container">
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
-            alt='logo'
+            src="https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png"
+            alt="logo"
             style={{ height: "50px", width: "100px", borderRadius: "10px" }}
             onClick={() => navigate("/")}
           />
         </div>
-        <div className='admin-desktop-header-navbar-container'>
+        <div className="admin-desktop-header-navbar-container">
           <p
             onClick={() => navigate("/dashboard", { state: data })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Dashboard
           </p>
           <p
             onClick={() => navigate("/sendAssessments", { state: data })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Assessments
           </p>
           <p
             onClick={() => navigate("/testReports", { state: data })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Test Reports
           </p>
           <p
             onClick={() => navigate("/studentReports", { state: data })}
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
           >
             Student Reports
           </p>
           <p
-            className='admin-desktop-header-navbar-link'
+            className="admin-desktop-header-navbar-link"
             onClick={() => navigate("/adminLogin")}
           >
             Admin
           </p>
         </div>
-        <div className='admin-mobile-header-navbar-container'>
+        <div className="admin-mobile-header-navbar-container">
           <Popup
             contentStyle={{ width: "50%", backgroundColor: "white" }}
             trigger={
-              <button className='admin-hamburger-btn'>
+              <button className="admin-hamburger-btn">
                 <GiHamburgerMenu />
               </button>
             }
-            position='bottom right'
+            position="bottom right"
           >
-            <ul className='admin-mobile-hamburger-menu'>
+            <ul className="admin-mobile-hamburger-menu">
               <li
                 onClick={() => navigate("/dashboard", { state: data })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Dashboard
               </li>
               <li
                 onClick={() => navigate("/sendAssessments", { state: data })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Assessments
               </li>
               <li
                 onClick={() => navigate("/testReports", { state: data })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Test Resports
               </li>
               <li
                 onClick={() => navigate("/studentReports", { state: data })}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Student Resports
               </li>
               <li
                 onClick={() => navigate("/adminLogin")}
-                className='admin-header-navbar-link'
+                className="admin-header-navbar-link"
               >
                 Admin
               </li>
@@ -130,35 +132,35 @@ function StudentReports() {
           </Popup>
         </div>
       </div>
-      <div className='table-reports-container'>
+      <div className="table-reports-container">
         <h1 style={{ marginBottom: "15px" }}>Student Data</h1>
-        <div className='input-label-container'>
-          <label htmlFor='search'>Search by Student Email :</label>
+        <div className="input-label-container">
+          <label htmlFor="search">Search by Student Email :</label>
           <input
-            id='search'
+            id="search"
             value={search}
-            type='text'
+            type="text"
             onChange={handleSearch}
             style={{ marginBottom: "20px", marginLeft: "25px" }}
-            className='input-search input'
+            className="input-search input"
           />
         </div>
-        <div className='date-filter'>
-          <div className='display-between'>
+        <div className="date-filter">
+          <div className="display-between">
             Start Date:{"   "}
             <input
-              type='date'
+              type="date"
               value={startDate}
-              className='date-input'
+              className="date-input"
               onChange={(e) => setStartDate(e.target.value)}
             />
           </div>
-          <div className='display-between'>
+          <div className="display-between">
             End Date:{" "}
             <input
-              type='date'
+              type="date"
               value={endDate}
-              className='date-input'
+              className="date-input"
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
@@ -169,9 +171,9 @@ function StudentReports() {
             Filter
           </button>
         </div>
-        <div className='desktop-table-container'>
+        <div className="desktop-table-container">
           {filteredData.length > 0 ? (
-            <table border='2px'>
+            <table border="2px">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -243,57 +245,57 @@ function StudentReports() {
           )}
         </div>
         {/* mobile table container with all tests data responses cards */}
-        <div className='mobile-table-container'>
+        <div className="mobile-table-container">
           {filteredData.length > 0
             ? filteredData.map((item, index) => (
-                <div className='table-data-container'>
-                  <div className='table-data'>
-                    <p className='th'>Id</p>
-                    <p className='td'>{index + 1}</p>
+                <div className="table-data-container">
+                  <div className="table-data">
+                    <p className="th">Id</p>
+                    <p className="td">{index + 1}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Completed On</p>
-                    <p className='td'>{item.Timestamp}</p>
+                    <p className="td">{item.Timestamp}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Name</p>
-                    <p className='td'>{item.Name}</p>
+                    <p className="td">{item.Name}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Email Address</p>
-                    <p className='td'>{item.Email_Address}</p>
+                    <p className="td">{item.Email_Address}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Phone Number</p>
-                    <p className='td'>{item.Phone_Number}</p>
+                    <p className="td">{item.Phone_Number}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Email Address</p>
-                    <p className='td'>{item.Email_Address}</p>
+                    <p className="td">{item.Email_Address}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Total Score</p>
-                    <p className='td'>{item.Score}</p>
+                    <p className="td">{item.Score}</p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>
                       {item.aptitude_score !== undefined
                         ? "Aptitude Score"
                         : "Java Score"}
                     </p>
-                    <p className='td'>
+                    <p className="td">
                       {item.aptitude_score !== undefined
                         ? item.aptitude_score
                         : item.fullstack_java_score}
                     </p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>
                       {item.technical_score !== undefined
                         ? "Technical Score"
                         : "React Score"}
                     </p>
-                    <p className='td'>
+                    <p className="td">
                       {item.technical_score !== undefined
                         ? item.technical_score
                         : item.reasoning_score !== undefined
@@ -301,13 +303,13 @@ function StudentReports() {
                         : item.fullstack_react_score}
                     </p>
                   </div>
-                  <div className='table-data'>
+                  <div className="table-data">
                     <p>Test Type</p>
-                    <p className='td'>{item.testType}</p>
+                    <p className="td">{item.testType}</p>
                   </div>
-                  <div className='view-button'>
+                  <div className="view-button">
                     <button
-                      className='btn'
+                      className="btn"
                       onClick={() => navigate("/studentChart", { state: item })}
                     >
                       View Score
