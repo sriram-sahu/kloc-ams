@@ -1,15 +1,92 @@
 // import react, react-router-dom packages and index.css file to render FreshersJuniorTabulation component
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
 import "./table.css";
 
 function FreshersJuniorTabulation() {
   // location varaiable to get location of the testReports route and state
   const location = useLocation();
   // useState of data to store Freshers Junior test data responses
-  const [data, setData] = useState(location.state);
+  const [data, setData] = useState(
+    location.state.map((item, index) => ({ ...item, id: index + 1 }))
+  );
   // navigate variable used to naviagating to different routes
   const navigate = useNavigate();
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "ID",
+      width: 10,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "Timestamp",
+      headerName: "Completed On",
+      width: 160,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "Name",
+      headerName: "Name",
+      width: 220,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "Email_Address",
+      headerName: "Email Address",
+      width: 220,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "Phone_Number",
+      headerName: "Phone Number",
+      sortable: false,
+      width: 120,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "total_score",
+      headerName: "Total Score",
+      width: 120,
+    },
+    {
+      field: "aptitude_score",
+      headerName: "Aptitude Score",
+      width: 120,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "reasoning_score",
+      headerName: "Reasoning Score",
+      width: 120,
+      headerClassName: "table-header",
+      cellClassName: "table-cell",
+    },
+    {
+      field: "View Score",
+      headerName: "View Score",
+      sortable: false,
+      width: 120,
+      renderCell: (params) => (
+        <button
+          onClick={() => {
+            navigate("/studentChart", { state: params.row });
+            handleUpdate(params.row);
+          }}
+        >
+          View
+        </button>
+      ),
+    },
+  ];
 
   // handleUpdate function to update section scores to google sheet of Freshers Junior Test google sheet using sheet db google api
   const handleUpdate = (item) => {
@@ -38,60 +115,38 @@ function FreshersJuniorTabulation() {
   };
 
   return (
-    <div className='test-reports-container'>
+    <div className=''>
       <h1 style={{ textAlign: "center" }}>
         Freshers Junior Test Tabulation Data
       </h1>
       {/* desktop table container with table of Freshers Junior test data respones */}
-      <div className='test-table'>
+      <div className='d-none d-lg-block text-center'>
         {data.length > 0 ? (
-          <table border='2px' style={{ margin: "auto" }}>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Completed On</th>
-                <th>Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-                <th>Total Score</th>
-                <th>Aptitude Score</th>
-                <th>Reasoning Score</th>
-                <th>View Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr>
-                  <td>{index}</td>
-                  <td>{item.Timestamp}</td>
-                  <td>{item.Name}</td>
-                  <td>{item.Email_Address}</td>
-                  <td>{item.Phone_Number}</td>
-                  <td>{item.Score}</td>
-                  <td>{item.aptitude_score}</td>
-                  <td>{item.reasoning_score}</td>
-                  <td>
-                    {/* clicking view button it'll navigates to studentChart route */}
-                    <button
-                      onClick={() => {
-                        navigate("/studentChart", { state: item });
-                        handleUpdate(item);
-                      }}
-                      style={{ padding: "3px", width: "60px" }}
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div
+            style={{
+              minHeight: 100,
+              width: "95%",
+              textAlign: "center",
+              margin: "auto",
+            }}
+          >
+            <DataGrid
+              rows={data}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[5, 10, 15, 20]}
+            />
+          </div>
         ) : (
           "No Data Found"
         )}
       </div>
       {/* mobile table container with table of Freshers Junior test data responses */}
-      <div className='mobile-table-container'>
+      <div className='d-lg-none mobile-table-container'>
         {data.length > 0
           ? data.map((item, index) => (
               <div className='table-data-container'>

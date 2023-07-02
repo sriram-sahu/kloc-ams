@@ -279,3 +279,20 @@ th {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+
+.mobile-table-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-header {
+  font-size: 16px;
+  border-right: 1px solid rgba(224, 224, 224, 1);
+  white-space: wrap;
+}
+.table-cell {
+  border-right: 1px solid rgba(224, 224, 224, 1);
+}
