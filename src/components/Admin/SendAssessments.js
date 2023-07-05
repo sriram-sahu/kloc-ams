@@ -1,11 +1,9 @@
 // import all required packages like react, unique-random, @emailjs-browser, js-cookie, react-router-dom, @mui-material, reactjs-popup, react-icons and components like EachCandidateInputField, index.css components to render the SendAssessments component
-// import all required packages like react, unique-random, @emailjs-browser, js-cookie, react-router-dom, @mui-material, reactjs-popup, react-icons and components like EachCandidateInputField, index.css components to render the SendAssessments component
 import React, { useState, useEffect } from "react";
 import EachCandidateInputField from "./EachCandidateInputField";
 import uniqueRandom from "unique-random";
 import emailjs from "@emailjs/browser";
 import "./index.css";
-// import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -15,6 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Alert } from "@mui/material";
+import Footer from '../Footer/Footer'
 import { useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
@@ -66,7 +65,7 @@ const Assessment = () => {
     //cookies token is for validation of admin
     const token = Cookies.get("token");
     if (!token) {
-      navigate("/notFound");
+      navigate("/unauthorized");
     }
 
     setStudentCount(1);
@@ -104,7 +103,7 @@ const Assessment = () => {
         {
           to_name: student.name,
           from_name: "kloc",
-          message: `You have been invited to write ${student.test}. \n Your login email is ${student.email} and Test pin in ${student.uniqueId}. \n Test Link : http://localhost:3000/studentLogin`,
+          message:  student.uniqueId,
           to_email: student.email,
         },
         "MkG09aTM7gyK7zTog"
@@ -171,15 +170,16 @@ const Assessment = () => {
   };
 
   return (
+    <div>
     <div className='send-assessment-main-container'>
       {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
       <div className='admin-header-container'>
         <div className='admin-header-logo-container'>
           {/* logo */}
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+            src='https://res.cloudinary.com/de5cu0mab/image/upload/v1688216997/KLoc_Square_Logo_-_400x400_ciw1ej.jpg'
             alt='logo'
-            style={{ height: "50px", width: "100px", borderRadius: "10px" }}
+            style={{ height: "50px", width: "70px", borderRadius: "10px" }}
             onClick={() => navigate("/")}
           />
         </div>
@@ -223,7 +223,7 @@ const Assessment = () => {
         {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
         <div className='admin-mobile-header-navbar-container'>
           <Popup
-            contentStyle={{ width: "50%", backgroundColor: "white" }}
+            contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
             trigger={
               <button className='admin-hamburger-btn'>
                 <GiHamburgerMenu />
@@ -277,6 +277,10 @@ const Assessment = () => {
       </div>
       <div className='assessment-container'>
         <div className='each-assessment-container'>
+          <div className="test-assessment-heading-container">
+          <h1 className="test-heading">Name of the Test</h1>
+          {/* <h1 className="test-heading1">Number of the Tests</h1> */}
+          </div>
           {tests.map((each, index) => (
             <div key={index} className='input-container'>
               <div className='assessmentContainerCheckboxContainer'>
@@ -295,6 +299,7 @@ const Assessment = () => {
                   {each}
                 </label>
               </div>
+              
               <input
                 disabled={activeTest !== each}
                 type='number'
@@ -358,6 +363,8 @@ const Assessment = () => {
           </div>
         )}
       </div>
+    </div>
+    <Footer />
     </div>
   );
 };

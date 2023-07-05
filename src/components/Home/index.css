@@ -1,3 +1,9 @@
+.home-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-height: auto;
+}
 .headerContainer{
     background-color:#1d1a69;
     color:white;

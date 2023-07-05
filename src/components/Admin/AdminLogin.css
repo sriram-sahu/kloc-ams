@@ -2,6 +2,12 @@
   margin: 0px;
   padding: 0px;
 }
+.admin-login-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
 /* AdminLogin and TestReports conmponents css*/
 .admin-header-container{
   padding-left:30px;

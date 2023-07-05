@@ -3,18 +3,20 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useNavigate } from "react-router-dom";
+import Footer from '../Footer/Footer'
 import "./index.css";
 
 function Home() {
   const navigate = useNavigate();
   return (
-    <>
+    <div >
+      <div className="home-container">
       <div className='headerContainer'>
         <div className='headerLogoContainer'>
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+            src='https://res.cloudinary.com/de5cu0mab/image/upload/v1688216997/KLoc_Square_Logo_-_400x400_ciw1ej.jpg'
             alt='logo'
-            style={{ height: "50px", width: "100px", borderRadius: "10px" }}
+            style={{ height: "50px", width: "70px", borderRadius: "10px" }}
           />
         </div>
         <div className='desktopHeaderNavbarContainer'>
@@ -36,7 +38,7 @@ function Home() {
         </div>
         <div className='admin-mobile-header-navbar-container'>
           <Popup
-            contentStyle={{ width: "50%", backgroundColor: "white" }}
+            contentStyle={{ width: "60%", backgroundColor: "white",textAlign:'center'}}
             trigger={
               <button className='admin-hamburger-btn'>
                 <GiHamburgerMenu />
@@ -69,12 +71,19 @@ function Home() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "300px",
+          marginTop:'200px',
+          fontSize:'40px',
+          fontWeight:'bold',
+          textAlign:'center'
         }}
       >
-        KLOC HIREME
+        Welcome to Assessments Made Simple
+        <br />
+        KLoc Technologies Pvt Ltd
       </div>
-    </>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

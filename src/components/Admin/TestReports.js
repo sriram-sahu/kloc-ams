@@ -13,6 +13,7 @@ import { CardActionArea, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import Footer from '../Footer/Footer'
 import "./AdminLogin.css";
 
 const TestReports = () => {
@@ -91,20 +92,21 @@ const TestReports = () => {
     const token = Cookies.get("token");
     // if token is undefined, notFound Component will be navigated
     if (!token) {
-      navigate("/notFound");
+      navigate("/unauthorized");
     }
   }, []);
 
   return (
+    <div>
     <div>
       {/* header for desktop  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
       <div className='admin-header-container'>
         <div className='admin-header-logo-container'>
           {/* logo */}
           <img
-            src='https://res.cloudinary.com/dufx8zalt/image/upload/v1687419355/logoimage1_krvkbq.png'
+            src='https://res.cloudinary.com/de5cu0mab/image/upload/v1688216997/KLoc_Square_Logo_-_400x400_ciw1ej.jpg'
             alt='logo'
-            style={{ height: "50px", width: "100px", borderRadius: "10px" }}
+            style={{ height: "50px", width: "70px", borderRadius: "10px" }}
             onClick={() => navigate("/")}
           />
         </div>
@@ -148,7 +150,7 @@ const TestReports = () => {
         {/* nav header for mobile  with Logo and components Dashboard, Assessments, Test Reports, Student Reports and Admin */}
         <div className='admin-mobile-header-navbar-container'>
           <Popup
-            contentStyle={{ width: "50%", backgroundColor: "white" }}
+            contentStyle={{ width: '70%',backgroundColor:"white",textAlign:'center',display:'flex',flexDirection:'column',justifyContent:'content',alignItems:'center' }}
             trigger={
               <button className='admin-hamburger-btn'>
                 <GiHamburgerMenu />
@@ -231,6 +233,8 @@ const TestReports = () => {
           })}
         </div>
       </div>
+    </div>
+    <Footer />
     </div>
   );
 };
